@@ -190,7 +190,24 @@ font-weight:600;
 margin:10px 0;
 }
 
-/* CART */
+/* ===== CARRITO RETRÁCTIL MEJORADO ===== */
+
+.cart-overlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.5);
+backdrop-filter:blur(4px);
+opacity:0;
+pointer-events:none;
+transition:0.4s;
+z-index:1500;
+}
+
+.cart-overlay.active{
+opacity:1;
+pointer-events:all;
+}
+
 .cart-panel{
 position:fixed;
 right:0;
@@ -201,14 +218,30 @@ background:var(--white);
 padding:30px;
 box-shadow:-5px 0 30px rgba(0,0,0,0.2);
 transform:translateX(100%);
-transition:0.4s;
+transition:0.5s cubic-bezier(.77,0,.18,1);
 overflow:auto;
 z-index:2000;
+border-top-left-radius:20px;
+border-bottom-left-radius:20px;
 }
 
-.cart-panel.active{transform:translateX(0);}
-body.dark .cart-panel{background:#1a1a1a;}
+.cart-panel.active{
+transform:translateX(0);
+}
 
+body.dark .cart-panel{
+background:#1a1a1a;
+}
+
+.close-cart{
+position:absolute;
+top:15px;
+right:20px;
+cursor:pointer;
+font-size:20px;
+}
+
+/* CHECKOUT */
 .checkout-modal{
 position:fixed;
 inset:0;
@@ -299,7 +332,10 @@ text-align:center;
 <p id="resultado"></p>
 </section>
 
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
 <div class="cart-panel" id="cartPanel">
+<span class="close-cart" onclick="toggleCart()">✕</span>
 <h3>Tu Carrito</h3>
 <ul id="cartItems"></ul>
 <h4>Total: $<span id="total">0</span></h4>
@@ -381,6 +417,7 @@ updateCart();
 
 function toggleCart(){
 document.getElementById("cartPanel").classList.toggle("active");
+document.getElementById("cartOverlay").classList.toggle("active");
 }
 
 function toggleDarkMode(){
@@ -396,6 +433,7 @@ alert("Pago procesado exitosamente");
 cart=[];
 updateCart();
 document.getElementById("checkout").style.display="none";
+toggleCart();
 }
 
 function diagnosticar(){

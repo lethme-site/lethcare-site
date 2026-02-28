@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LETHME CARE | LETH ME SKIN CARE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--sand:#C7A88A;
+--nude:#DAC6AE;
+--brown:#665647;
+--white:#FFFDF7;
+--black:#111;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Inter',sans-serif;
+background:var(--white);
+color:var(--black);
+transition:0.4s;
+overflow-x:hidden;
+}
+
+body.dark{
+--white:#111;
+--black:#FFFDF7;
+--brown:#DAC6AE;
+background:#0e0e0e;
+color:white;
+}
+
+h1,h2,h3{
+font-family:'Playfair Display',serif;
+}
+
+/* HEADER */
+header{
+position:fixed;
+width:100%;
+padding:20px 10%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(255,255,255,0.9);
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+
+body.dark header{
+background:rgba(0,0,0,0.9);
+}
+
+.logo{
+font-size:24px;
+letter-spacing:3px;
+}
+
+nav a{
+margin-left:25px;
+text-decoration:none;
+color:var(--black);
+font-weight:500;
+cursor:pointer;
+transition:0.3s;
+}
+
+nav a:hover{color:var(--sand);}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 10%;
+background:linear-gradient(to bottom,var(--white),#f8f6f3);
+}
+
+body.dark .hero{
+background:linear-gradient(to bottom,#111,#1a1a1a);
+}
+
+.hero h1{font-size:60px;}
+.hero p{margin:20px 0;color:var(--brown);}
+
+.btn{
+background:var(--black);
+color:white;
+padding:14px 32px;
+border:none;
+border-radius:40px;
+cursor:pointer;
+transition:0.4s;
+}
+
+.btn:hover{
+background:var(--sand);
+box-shadow:0 0 35px rgba(199,168,138,0.6);
+transform:translateY(-3px);
+}
+
+section{padding:120px 10%;}
+
+/* FILTERS */
+.filters{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+margin-bottom:40px;
+}
+
+.filters button{
+padding:10px 20px;
+border-radius:20px;
+border:1px solid var(--sand);
+background:white;
+cursor:pointer;
+transition:0.3s;
+}
+
+.filters button:hover{
+background:var(--sand);
+color:white;
+}
+
+/* PRODUCTS */
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:40px;
+}
+
+.card{
+background:var(--white);
+padding:25px;
+border-radius:20px;
+text-align:center;
+transition:0.4s;
+position:relative;
+box-shadow:0 10px 40px rgba(0,0,0,0.05);
+overflow:hidden;
+}
+
+.card img{
+height:200px;
+width:100%;
+object-fit:contain;
+margin-bottom:15px;
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+.card::after{
+content:"";
+position:absolute;
+inset:0;
+border-radius:20px;
+background:radial-gradient(circle at 50% 0%, rgba(199,168,138,0.6), transparent 70%);
+opacity:0;
+transition:0.5s;
+pointer-events:none;
+}
+
+body.dark .card{
+background:#1a1a1a;
+box-shadow:0 10px 40px rgba(0,0,0,0.6);
+}
+
+body.dark .card:hover::after{
+opacity:1;
+}
+
+body.dark .card:hover{
+box-shadow:
+0 0 25px rgba(199,168,138,0.6),
+0 0 60px rgba(199,168,138,0.3);
+}
+
+.price{
+color:var(--sand);
+font-weight:600;
+margin:10px 0;
+}
+
+/* CART */
+.cart-panel{
+position:fixed;
+right:0;
+top:0;
+height:100%;
+width:350px;
+background:var(--white);
+padding:30px;
+box-shadow:-5px 0 30px rgba(0,0,0,0.2);
+transform:translateX(100%);
+transition:0.4s;
+overflow:auto;
+z-index:2000;
+}
+
+.cart-panel.active{transform:translateX(0);}
+body.dark .cart-panel{background:#1a1a1a;}
+
+.checkout-modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.6);
+display:none;
+align-items:center;
+justify-content:center;
+}
+
+.checkout-box{
+background:var(--white);
+padding:40px;
+border-radius:20px;
+width:90%;
+max-width:400px;
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ddd;
+}
+
+/* FOOTER */
+footer{
+background:#111;
+color:white;
+padding:60px 10%;
+text-align:center;
+}
+
+@media(max-width:768px){
+.hero h1{font-size:38px;}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">LETHME CARE</div>
+<nav>
+<a onclick="scrollToShop()">Shop</a>
+<a href="#diagnostico">Diagnóstico</a>
+<a onclick="toggleDarkMode()">✶</a>
+<a onclick="toggleCart()">◛</a>
+</nav>
+</header>
+
+<section class="hero">
+<div>
+<h1>LETH ME SKINCARE ADAPTAED TO CLIMATE</h1>
+<p>Tecnología cosmética diseñada para dominar climas extremos.</p>
+<button class="btn" onclick="scrollToShop()">Descubrir Colección</button>
+</div>
+</section>
+
+<section id="shop">
+<h2>Colección Premium</h2>
+<br>
+<div class="filters">
+<button onclick="filterProducts('all')">Todos</button>
+<button onclick="filterProducts('seca')">Piel Seca</button>
+<button onclick="filterProducts('grasa')">Piel Grasa</button>
+<button onclick="filterProducts('mixta')">Piel Mixta</button>
+</div>
+<div class="products" id="product-list"></div>
+</section>
+
+<section id="diagnostico">
+<h2>Diagnóstico Facial</h2>
+<br>
+<select id="clima">
+<option value="">¿Tu piel se reseca?</option>
+<option>Si</option>
+<option>No</option>
+</select>
+
+<select id="brillo">
+<option value="">¿Tienes brillo excesivo?</option>
+<option>Si</option>
+<option>No</option>
+</select>
+
+<button class="btn" onclick="diagnosticar()">Obtener Resultado</button>
+<p id="resultado"></p>
+</section>
+
+<div class="cart-panel" id="cartPanel">
+<h3>Tu Carrito</h3>
+<ul id="cartItems"></ul>
+<h4>Total: $<span id="total">0</span></h4>
+<button class="btn" onclick="openCheckout()">Pagar</button>
+</div>
+
+<div class="checkout-modal" id="checkout">
+<div class="checkout-box">
+<h3>Pago Seguro</h3>
+<input placeholder="Nombre en tarjeta">
+<input placeholder="Número de tarjeta">
+<input placeholder="MM/AA">
+<input placeholder="CVV">
+<button class="btn" onclick="simulatePayment()">Confirmar Pago</button>
+</div>
+</div>
+
+<footer>
+<p>Contacto: soportelmc@gmail.com</p>
+<p>Instagram: @lethmecare</p>
+<p>© 2026 LETHME CARE - Monterrey, México</p>
+</footer>
+
+<script>
+const products=[
+{name:"Hydra Serum",price:890,type:"seca",img:"img/1.jpg"},
+{name:"Oil Control Cream",price:920,type:"grasa",img:"img/2.jpg"},
+{name:"Balance Toner",price:850,type:"mixta",img:"img/3.jpg"},
+{name:"Vitamin C Glow",price:950,type:"seca",img:"img/4.jpg"},
+{name:"Aqua Shield SPF50",price:780,type:"grasa",img:"img/5.jpg"},
+{name:"Night Repair Elixir",price:1100,type:"seca",img:"img/6.jpg"},
+{name:"Pore Minimizer",price:870,type:"grasa",img:"img/7.jpg"},
+{name:"Calming Essence",price:920,type:"mixta",img:"img/8.jpg"},
+{name:"Luxury Gold Mask",price:1200,type:"mixta",img:"img/9.jpg"}
+];
+
+let cart=[];
+
+function displayProducts(list=products){
+const container=document.getElementById("product-list");
+container.innerHTML="";
+list.forEach((p,i)=>{
+container.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<div class="price">$${p.price}</div>
+<button class="btn" onclick="addToCart(${i})">Agregar</button>
+</div>`;
+});
+}
+
+function filterProducts(type){
+if(type==="all") displayProducts();
+else displayProducts(products.filter(p=>p.type===type));
+}
+
+function addToCart(i){
+cart.push(products[i]);
+updateCart();
+toggleCart();
+}
+
+function updateCart(){
+let total=0;
+const list=document.getElementById("cartItems");
+list.innerHTML="";
+cart.forEach((item,index)=>{
+total+=item.price;
+list.innerHTML+=`<li>${item.name} - $${item.price} <button onclick="removeItem(${index})">X</button></li>`;
+});
+document.getElementById("total").innerText=total;
+}
+
+function removeItem(i){
+cart.splice(i,1);
+updateCart();
+}
+
+function toggleCart(){
+document.getElementById("cartPanel").classList.toggle("active");
+}
+
+function toggleDarkMode(){
+document.body.classList.toggle("dark");
+}
+
+function openCheckout(){
+document.getElementById("checkout").style.display="flex";
+}
+
+function simulatePayment(){
+alert("Pago procesado exitosamente");
+cart=[];
+updateCart();
+document.getElementById("checkout").style.display="none";
+}
+
+function diagnosticar(){
+let clima=document.getElementById("clima").value;
+let brillo=document.getElementById("brillo").value;
+let result="";
+
+if(clima==="Si" && brillo==="No")
+result="Tu piel es SECA. Recomendamos Hydra Serum.";
+else if(brillo==="Si")
+result="Tu piel es GRASA. Recomendamos Oil Control Cream.";
+else
+result="Tu piel es MIXTA. Recomendamos Balance Toner.";
+
+document.getElementById("resultado").innerText=result;
+}
+
+function scrollToShop(){
+document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+}
+
+displayProducts();
+</script>
+
+</body>
+</html>
